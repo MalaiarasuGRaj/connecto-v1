@@ -11,6 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
 
 interface Message {
   id: string;
@@ -61,7 +62,7 @@ export default function ChatInterface() {
       });
        const lastUserMessageIndex = messages.findLastIndex(m => m.role === 'user');
        if (lastUserMessageIndex !== -1) {
-         setMessages(prev => prev.slice(0, lastUserMessageMessageIndex));
+         setMessages(prev => prev.slice(0, lastUserMessageIndex));
        }
     } finally {
       setIsLoading(false);
@@ -77,6 +78,7 @@ export default function ChatInterface() {
           </div>
           OpenRouter Chat
         </CardTitle>
+        <Separator />
       </CardHeader>
       <CardContent className="p-0">
         <ScrollArea className="h-[500px] w-full" ref={scrollAreaRef}>
