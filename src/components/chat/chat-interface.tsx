@@ -25,7 +25,6 @@ export default function ChatInterface() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -83,8 +82,8 @@ export default function ChatInterface() {
         <Separator />
       </CardHeader>
       <CardContent className="p-0">
-        <ScrollArea className="h-[500px] w-full" ref={scrollAreaRef}>
-            <div className="p-6 flex flex-col gap-6" ref={viewportRef}>
+        <ScrollArea className="h-[500px] w-full" viewportRef={viewportRef}>
+            <div className="p-6 flex flex-col gap-6">
                 {messages.map((message) => (
                 <div
                     key={message.id}
