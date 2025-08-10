@@ -1,0 +1,42 @@
+TCS Hiring Process – System Engineer (SE) Role for B.E./B.Tech
+
+1. Application
+- Eligible candidates apply online via the TCS Careers portal or through campus placement drives.
+- Resume should highlight relevant technical skills, academic achievements, and project experience.
+
+2. Written Test / Online Assessment
+- Sections: Quantitative Aptitude, Logical Reasoning, Verbal Ability, and Coding skills.
+- Duration: Approximately 1–2 hours.
+- Coding test may include basic to intermediate programming problems (commonly in C, C++, Java, or Python).
+
+3. Technical Interview(s)
+- Focuses on core engineering subjects, programming concepts, and project work.
+- Typical topics: Data structures, algorithms, OOPs concepts, databases, OS basics, and problem-solving.
+- May include whiteboard coding and scenario-based questions.
+
+4. Managerial / HR Interview
+- Assesses communication skills, teamwork, leadership potential, and overall fit for TCS culture.
+- Questions about career goals, academic background, strengths and areas of improvement.
+
+5. Offer and Onboarding
+- Successful candidates receive an offer letter for the System Engineer (SE) position via email.
+- Onboarding includes orientation, systems setup, and assignment to project teams per TCS guidelines.
+
+Eligibility Criteria (SE Role, B.E./B.Tech):
+- Education: B.E./B.Tech (all major branches, per job posting).
+- Minimum 60% marks throughout academics (10th, 12th, graduation).
+- No active backlogs at the time of selection.
+- Academic gap (if any) should not exceed 24 months.
+- Final year students are eligible to apply as freshers.
+
+Role Hired For:
+- System Engineer (SE)
+
+Salary Package (Fresher, SE Role):
+- Typically ₹3.5–₹4.0 Lakhs per annum (LPA).
+
+Tips for Preparation:
+- Practice company-specific aptitude and coding tests.
+- Revise core engineering concepts and programming fundamentals.
+- Prepare concise explanations of projects and internships.
+- Develop interpersonal and communication skills for interviews.

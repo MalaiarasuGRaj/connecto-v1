@@ -1,0 +1,54 @@
+Comcast Hiring Process – Technical Graduate Freshers
+
+1. Application
+- Submit your application through the Comcast Careers website or participate in campus/off-campus drives.
+- Update your resume to highlight technical skills, relevant academic projects, and internships.
+
+2. Online Assessment
+- Common sections: Coding (Python, Java, C), SQL queries, aptitude (quantitative, logical reasoning), verbal skills, Linux commands.
+- Duration: Usually 1–2 hours.
+- Focus on problem-solving, data structures, algorithms, and real-world technical scenarios.
+
+3. Telephonic/Virtual Screening
+- Conducted by a recruiter or hiring manager.
+- Covers resume details, technical exposure, and basic behavioral questions.
+
+4. Technical Interview
+- May be one or more rounds.
+- Covers OOP concepts, data structures, programming, DBMS, algorithms, project discussion, and coding exercises.
+- Emphasis on hands-on problem-solving and scenario-based questions.
+
+5. Managerial/HR Interview
+- Evaluates communication, teamwork, leadership, and cultural fit.
+- Discusses career goals, strengths/weaknesses, time management, critical thinking.
+
+6. Offer and Onboarding
+- Selected candidates receive offer letters via email.
+- Onboarding includes orientation, systems setup, and allocation to teams.
+
+Eligibility Criteria:
+- Education: B.E./B.Tech, M.E./M.Tech, MCA, BCA, MBA, etc. (role-dependent).
+- Minimum 60% aggregate marks throughout 10th, 12th, and graduation.
+- No pending backlogs allowed.
+- Education gap not exceeding one year.
+- Proficiency in relevant programming languages and technical domains.
+- Good communication and time management skills.
+
+Roles Hired For:
+- Software Engineer
+- Development Engineer
+- Data Analyst
+- Network Engineer
+- Product/Engineering Operations
+
+Salary Package (India, 2025):
+- Average fresher salary: ₹18.7lakhs per annum (can range depending on role and location)[7][17][15].
+- Typical range: ₹13.7–₹19lakhs per annum for freshers and entry roles[15][17].
+- Higher packages offered for specialized/niche technical roles.
+
+Tips for Preparation:
+- Practice company-specific coding and aptitude tests.
+- Review OOP, DBMS, algorithms, and real-world tech problems.
+- Prepare concise project explanations and internship experiences.
+- Develop strong interpersonal and communication skills for interviews.
+- Know the Comcast brand, values, and business domains.
