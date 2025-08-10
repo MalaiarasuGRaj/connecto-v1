@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useRef, useEffect, type FormEvent } from "react";
+import Image from "next/image";
 import { Send, Bot, User, Loader2 } from "lucide-react";
 import { getResponse } from "@/app/actions";
 import { Button } from "@/components/ui/button";
@@ -81,9 +82,7 @@ export default function ChatInterface() {
     <Card className="w-full max-w-2xl mx-auto shadow-xl rounded-2xl bg-card/80 backdrop-blur-sm border-white/10">
       <CardHeader className="border-b border-white/10">
         <CardTitle className="flex items-center gap-3 text-xl font-headline">
-          <div className="p-2 rounded-full bg-primary/10 text-primary">
-            <Bot className="w-6 h-6" />
-          </div>
+          <Image src="/logo.png" alt="Connecto Logo" width={32} height={32} className="rounded-full" />
           Connecto
         </CardTitle>
         <Separator />
