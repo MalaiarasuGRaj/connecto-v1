@@ -1,0 +1,1 @@
+RAG stands for Retrieval-Augmented Generation. It is a technique for improving the accuracy and reliability of large language models (LLMs) by grounding them in external knowledge bases. This chatbot is now configured to use a simple RAG implementation. You can add any text files into the 'data' directory, and they will be used as the knowledge base.
