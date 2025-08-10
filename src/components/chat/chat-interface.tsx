@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
+import Markdown from "markdown-to-jsx";
 
 interface Message {
   id: string;
@@ -104,7 +105,9 @@ export default function ChatInterface() {
                         : "bg-secondary text-secondary-foreground"
                     )}
                     >
-                    <p className="whitespace-pre-wrap text-sm leading-6">{message.content}</p>
+                    <div className="prose prose-sm max-w-none text-sm leading-6">
+                        <Markdown>{message.content}</Markdown>
+                    </div>
                     </div>
                     {message.role === "user" && (
                      <Avatar className="h-8 w-8 bg-accent text-accent-foreground">
