@@ -86,7 +86,11 @@ ${filenames.join('\n')}
 
 Only return the single, most relevant filename and nothing else. If no file is relevant, respond with "NONE".`;
 
-    const relevantFilename = await callOpenRouter(fileSelectionPrompt, userMessage);
+    let relevantFilename = await callOpenRouter(fileSelectionPrompt, userMessage);
+    
+    // Clean up filename from potential markdown
+    relevantFilename = relevantFilename.trim().replace(/`/g, '');
+
 
     if (!relevantFilename || relevantFilename === 'NONE' || !filenames.includes(relevantFilename)) {
         return "I do not have information on that topic. My knowledge is limited to the documents I have been provided.";
