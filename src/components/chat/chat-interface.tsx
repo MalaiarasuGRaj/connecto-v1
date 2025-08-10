@@ -59,7 +59,7 @@ export default function ChatInterface() {
     try {
       const botResponse = await getResponse({
         message: currentInput,
-        history: messages,
+        history: messages.slice(0, -1), // Pass history without the current user message
       });
       const botMessage: Message = {
         id: crypto.randomUUID(),
@@ -84,7 +84,7 @@ export default function ChatInterface() {
 
   return (
     <Card className="w-full max-w-2xl h-full flex flex-col mx-auto md:shadow-xl md:rounded-2xl md:bg-card/80 md:backdrop-blur-sm md:border-white/10 border-0 rounded-none">
-      <CardHeader className="border-b md:border-white/10">
+      <CardHeader className="border-b md:border-white/10 shrink-0">
         <CardTitle className="flex items-center gap-3 text-xl font-headline">
           <Image src="/logo.png" alt="Connecto Logo" width={32} height={32} className="rounded-md" />
           Connecto
@@ -139,7 +139,7 @@ export default function ChatInterface() {
             </div>
         </ScrollArea>
       </CardContent>
-      <CardFooter className="p-4 border-t md:border-white/10">
+      <CardFooter className="p-4 border-t md:border-white/10 shrink-0">
         <form onSubmit={handleSubmit} className="flex w-full items-center gap-3">
           <Textarea
             value={input}
