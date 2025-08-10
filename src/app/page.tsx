@@ -3,8 +3,8 @@ import { Linkedin } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-r from-violet-200 to-pink-200">
-      <main className="flex-grow flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
+    <div className="flex h-screen flex-col bg-gradient-to-r from-violet-200 to-pink-200">
+      <main className="flex flex-1 flex-col items-center justify-center p-4 sm:p-6 md:p-8 overflow-hidden">
         <ChatInterface />
       </main>
       <footer className="w-full p-4 text-center text-gray-700 text-sm">
