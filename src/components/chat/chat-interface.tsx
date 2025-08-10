@@ -101,7 +101,7 @@ export default function ChatInterface() {
                         "p-3 rounded-lg max-w-sm md:max-w-md lg:max-w-lg",
                         message.role === "user"
                         ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-muted-foreground"
+                        : "bg-secondary text-secondary-foreground"
                     )}
                     >
                     <p className="whitespace-pre-wrap text-sm leading-6">{message.content}</p>
