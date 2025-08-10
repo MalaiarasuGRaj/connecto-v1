@@ -6,8 +6,15 @@ import fs from 'fs';
 import path from 'path';
 
 const MessageSchema = z.object({
-  message: z.string(),
+  role: z.enum(['user', 'bot', 'system']),
+  content: z.string(),
 });
+
+const RequestSchema = z.object({
+  message: z.string(),
+  history: z.array(MessageSchema),
+});
+
 
 // Function to get all .txt filenames from the data directory
 async function getCompanyFilenames(): Promise<string[]> {
@@ -37,7 +44,12 @@ async function getCompanyData(filename: string): Promise<string> {
   }
 }
 
-async function callOpenRouter(systemPrompt: string, userMessage: string) {
+async function callOpenRouter(systemPrompt: string, userMessage: string, history: {role: string, content: string}[]) {
+    const mappedHistory = history.map(h => ({
+      role: h.role === 'bot' ? 'assistant' : 'user',
+      content: h.content,
+    }));
+
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -48,6 +60,7 @@ async function callOpenRouter(systemPrompt: string, userMessage: string) {
         "model": "google/gemini-flash-1.5",
         "messages": [
           { "role": "system", "content": systemPrompt },
+          ...mappedHistory,
           { "role": "user", "content": userMessage }
         ]
       })
@@ -64,13 +77,14 @@ async function callOpenRouter(systemPrompt: string, userMessage: string) {
 }
 
 
-export async function getResponse(input: { message: string }) {
-  const validatedInput = MessageSchema.safeParse(input);
+export async function getResponse(input: { message: string, history: any[] }) {
+  const validatedInput = RequestSchema.safeParse(input);
   if (!validatedInput.success) {
     throw new Error('Invalid input');
   }
 
-  const userMessage = validatedInput.data.message;
+  const { message: userMessage, history } = validatedInput.data;
+
 
   try {
     const filenames = await getCompanyFilenames();
@@ -86,7 +100,7 @@ ${filenames.join('\n')}
 
 Only return the single, most relevant filename and nothing else. If no file is relevant for the user's question (e.g. for "hi", "how are you", or "what companies do you have?"), respond with "NONE".`;
 
-    let relevantFilename = await callOpenRouter(fileSelectionPrompt, userMessage);
+    let relevantFilename = await callOpenRouter(fileSelectionPrompt, userMessage, []); // Pass empty history for routing
     relevantFilename = relevantFilename.trim().replace(/`/g, '');
 
 
@@ -97,7 +111,7 @@ Only return the single, most relevant filename and nothing else. If no file is r
             return `I found the file for ${relevantFilename}, but I was unable to read its contents.`;
         }
 
-        const answerGenerationPrompt = `You are a career assistant chatbot for students. Your purpose is to provide information about company hiring processes, salaries, roles, and previous placement details based *only* on the provided document.
+        const answerGenerationPrompt = `You are a career assistant chatbot for students. Your purpose is to provide information about company hiring processes, salaries, roles, and previous placement details based *only* on the provided document and the conversation history.
 
 You must not answer any questions that fall outside the scope of the provided document. Do not use any of your own knowledge.
 
@@ -106,7 +120,7 @@ Document for ${relevantFilename}:
 ${companyKnowledge}
 ---
 `;
-        return await callOpenRouter(answerGenerationPrompt, userMessage);
+        return await callOpenRouter(answerGenerationPrompt, userMessage, history);
     }
 
     // Step 3: If no specific file is relevant, fall back to a general conversational prompt.
@@ -118,7 +132,7 @@ The documents you have information about are: ${filenames.map(f => f.replace('.t
 - If the user asks what companies you have information on, list the available companies.
 - For any other query that is not a simple greeting, gently guide the user to ask about one of the specific companies you have data for. Do not make up information.`;
 
-    return await callOpenRouter(generalPrompt, userMessage);
+    return await callOpenRouter(generalPrompt, userMessage, history);
 
 
   } catch (error) {

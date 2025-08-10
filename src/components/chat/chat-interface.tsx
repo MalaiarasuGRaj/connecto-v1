@@ -50,13 +50,18 @@ export default function ChatInterface() {
       role: "user",
       content: input,
     };
-    setMessages((prev) => [...prev, userMessage]);
+
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
     const currentInput = input;
     setInput("");
     setIsLoading(true);
 
     try {
-      const botResponse = await getResponse({ message: currentInput });
+      const botResponse = await getResponse({
+        message: currentInput,
+        history: messages, // Pass previous messages as history
+      });
       const botMessage: Message = {
         id: crypto.randomUUID(),
         role: "bot",
@@ -69,7 +74,7 @@ export default function ChatInterface() {
         title: "Error",
         description: "Failed to get response from the bot.",
       });
-       const lastUserMessageIndex = messages.findLastIndex(m => m.role === 'user');
+       const lastUserMessageIndex = newMessages.findLastIndex(m => m.role === 'user');
        if (lastUserMessageIndex !== -1) {
          setMessages(prev => prev.slice(0, lastUserMessageIndex));
        }
