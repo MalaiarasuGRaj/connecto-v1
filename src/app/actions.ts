@@ -73,36 +73,31 @@ export async function getResponse(input: { message: string }) {
   const userMessage = validatedInput.data.message;
 
   try {
-    // Step 1: Get the relevant filename from the LLM
     const filenames = await getCompanyFilenames();
     if (filenames.length === 0) {
         return "I'm sorry, but I don't have any company information available right now.";
     }
 
+    // Step 1: Try to find a relevant filename.
     const fileSelectionPrompt = `You are an expert at routing user questions to the correct document. Based on the user's question, identify the most relevant filename from the following list.
 
 Available files:
 ${filenames.join('\n')}
 
-Only return the single, most relevant filename and nothing else. If no file is relevant, respond with "NONE".`;
+Only return the single, most relevant filename and nothing else. If no file is relevant for the user's question (e.g. for "hi", "how are you", or "what companies do you have?"), respond with "NONE".`;
 
     let relevantFilename = await callOpenRouter(fileSelectionPrompt, userMessage);
-    
-    // Clean up filename from potential markdown
     relevantFilename = relevantFilename.trim().replace(/`/g, '');
 
 
-    if (!relevantFilename || relevantFilename === 'NONE' || !filenames.includes(relevantFilename)) {
-        return "I do not have information on that topic. My knowledge is limited to the documents I have been provided.";
-    }
+    // Step 2: If a relevant file is found, use it to answer the question.
+    if (relevantFilename && relevantFilename !== 'NONE' && filenames.includes(relevantFilename)) {
+        const companyKnowledge = await getCompanyData(relevantFilename);
+        if (!companyKnowledge) {
+            return `I found the file for ${relevantFilename}, but I was unable to read its contents.`;
+        }
 
-    // Step 2: Get the content of that file and generate the final answer
-    const companyKnowledge = await getCompanyData(relevantFilename);
-     if (!companyKnowledge) {
-        return `I found the file for ${relevantFilename}, but I was unable to read its contents.`;
-    }
-
-    const answerGenerationPrompt = `You are a career assistant chatbot for students. Your purpose is to provide information about company hiring processes, salaries, roles, and previous placement details based *only* on the provided document.
+        const answerGenerationPrompt = `You are a career assistant chatbot for students. Your purpose is to provide information about company hiring processes, salaries, roles, and previous placement details based *only* on the provided document.
 
 You must not answer any questions that fall outside the scope of the provided document. Do not use any of your own knowledge.
 
@@ -111,8 +106,20 @@ Document for ${relevantFilename}:
 ${companyKnowledge}
 ---
 `;
+        return await callOpenRouter(answerGenerationPrompt, userMessage);
+    }
 
-    return await callOpenRouter(answerGenerationPrompt, userMessage);
+    // Step 3: If no specific file is relevant, fall back to a general conversational prompt.
+    const generalPrompt = `You are a helpful and friendly career assistant chatbot for students.
+Your primary role is to answer questions about company hiring processes using a specific set of documents.
+The documents you have information about are: ${filenames.map(f => f.replace('.txt', '')).join(', ')}.
+
+- If the user asks a general conversational question (like "hi", "hello", "how are you"), respond naturally and politely.
+- If the user asks what companies you have information on, list the available companies.
+- For any other query that is not a simple greeting, gently guide the user to ask about one of the specific companies you have data for. Do not make up information.`;
+
+    return await callOpenRouter(generalPrompt, userMessage);
+
 
   } catch (error) {
     console.error('Error in getResponse flow:', error);
