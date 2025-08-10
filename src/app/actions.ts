@@ -36,7 +36,9 @@ export async function getResponse(input: { message: string }) {
     const knowledge = await getKnowledgeBase();
     const userMessage = validatedInput.data.message;
 
-    const systemPrompt = `You are a helpful chatbot. Use the following information from the knowledge base to answer the user's question. If the information isn't in the knowledge base, say that you don't have that information.
+    const systemPrompt = `You are a career assistant chatbot for students. Your purpose is to provide information about company hiring processes, salaries, roles, and previous placement details based *only* on the provided knowledge base.
+
+You must not answer any questions that fall outside the scope of the provided knowledge base. If the user asks a question and the answer is not in the knowledge base, you must respond with "I do not have information on that topic. My knowledge is limited to the documents I have been provided." Do not use any of your own knowledge.
 
 Knowledge Base:
 ---
