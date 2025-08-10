@@ -113,7 +113,7 @@ Only return the single, most relevant filename and nothing else. If no file is r
 
         const answerGenerationPrompt = `You are a career assistant chatbot for students. Your purpose is to provide information about company hiring processes, salaries, roles, and previous placement details based *only* on the provided document and the conversation history.
 
-You must not answer any questions that fall outside the scope of the provided document. Do not use any of your own knowledge.
+You must not answer any questions that fall outside the scope of the provided document. Do not use any of your own knowledge. If the document contains information about salary, you must provide it.
 
 Document for ${relevantFilename}:
 ---
