@@ -1,0 +1,48 @@
+Infosys Hiring Process – B.E./B.Tech Freshers (2025)
+
+1. Application
+- Apply via Infosys Careers website, campus drives, or through referrals.
+- Update your resume to highlight technical skills, academic achievements, projects, and certifications.
+
+2. Online Assessment
+- Sections: Quantitative Aptitude, Logical Reasoning, Verbal Ability, and Coding (for specific roles).
+- Duration: Around 95 minutes, section-locked.
+- Coding section may include basic to intermediate problems (C, C++, Java, Python).
+
+3. Technical Interview
+- Focus on programming concepts, data structures, algorithms, DBMS, OOPs, and engineering fundamentals.
+- Expect coding, scenario-based problem-solving, and project discussion.
+
+4. HR Interview
+- Assess communication skills, teamwork, attitude, cultural fit, career goals, and flexibility regarding work location/technology.
+
+5. Offer and Onboarding
+- Selected candidates receive an offer letter and join as System Engineer, Software Engineer, or Digital Specialist Engineer.
+- Onboarding includes training, orientation, and assignment to projects.
+
+Eligibility Criteria (B.E./B.Tech Freshers)
+- Education: B.E./B.Tech (all streams eligible).
+- Minimum 60% marks (or 6.0 CGPA) in 10th and 12th.
+- Minimum 65–68% marks (or 6.5–6.8 CGPA) in graduation[6][3][18].
+- No active backlogs at the time of selection.
+- Maximum academic gap allowed is 24 months.
+
+Roles Hired For
+- System Engineer
+- Software Engineer
+- Digital Specialist Engineer (DSE)
+- Specialist Programmer (SP)
+
+Salary Package (2025)
+- System Engineer: ₹3.5–₹4.0 Lakhs per annum[13][16].
+- Digital Specialist Engineer: ₹6.0–₹9.0 Lakhs per annum[7][10][16].
+- Specialist Programmer: ₹13.0 Lakhs & above (rare, advanced roles)[16].
+- Packages may vary by skill, college, and chosen track.
+
+Tips for Preparation
+- Practice Infosys-specific aptitude, reasoning, and coding questions.
+- Revise fundamentals of CS/IT subjects, especially programming and DSA.
+- Prepare clear explanations for academic projects and internships.
+- Enhance communication and soft skills; rehearse answers for HR scenarios.
+- Stay updated on Infosys, its work culture, and major tech trends.
+

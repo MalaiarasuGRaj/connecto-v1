@@ -26,10 +26,11 @@ export default function ChatInterface() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (scrollAreaRef.current) {
-        scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+    if (viewportRef.current) {
+      viewportRef.current.scrollTop = viewportRef.current.scrollHeight;
     }
   }, [messages, isLoading]);
 
@@ -83,7 +84,7 @@ export default function ChatInterface() {
       </CardHeader>
       <CardContent className="p-0">
         <ScrollArea className="h-[500px] w-full" ref={scrollAreaRef}>
-            <div className="p-6 flex flex-col gap-6">
+            <div className="p-6 flex flex-col gap-6" ref={viewportRef}>
                 {messages.map((message) => (
                 <div
                     key={message.id}
