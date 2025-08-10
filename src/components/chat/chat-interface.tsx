@@ -20,8 +20,15 @@ interface Message {
   content: string;
 }
 
+const initialMessage: Message = {
+    id: "initial-message",
+    role: "bot",
+    content: "Hi! I'm your career assistant, here to help you with information about company hiring processes, salaries, and roles based on the provided documents. How can I help you with your placement preparation today?",
+};
+
+
 export default function ChatInterface() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
