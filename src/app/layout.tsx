@@ -4,8 +4,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Gemini Chat',
-  description: 'A simple chatbot web application using the Gemini API.',
+  title: 'OpenRouter Chat',
+  description: 'A simple chatbot web application using the OpenRouter API.',
 };
 
 export default function RootLayout({

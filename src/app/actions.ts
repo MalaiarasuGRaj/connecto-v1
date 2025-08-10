@@ -1,7 +1,6 @@
 
 'use server';
 
-import { generateGeminiResponse } from '@/ai/flows/generate-response';
 import { z } from 'zod';
 
 const MessageSchema = z.object({
@@ -15,10 +14,31 @@ export async function getResponse(input: { message: string }) {
   }
 
   try {
-    const result = await generateGeminiResponse(validatedInput.data);
-    return result.response;
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "model": "google/gemini-flash-1.5",
+        "messages": [
+          { "role": "user", "content": validatedInput.data.message }
+        ]
+      })
+    });
+
+    if (!response.ok) {
+        const errorBody = await response.text();
+        console.error('OpenRouter API error:', errorBody);
+        throw new Error(`OpenRouter API request failed with status ${response.status}`);
+    }
+
+    const jsonResponse = await response.json();
+    return jsonResponse.choices[0].message.content;
+
   } catch (error) {
-    console.error('Error getting response from Gemini:', error);
+    console.error('Error getting response from OpenRouter:', error);
     return 'Sorry, I encountered an error. Please try again.';
   }
 }

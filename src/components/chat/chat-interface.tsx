@@ -23,11 +23,11 @@ export default function ChatInterface() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const scrollAreaViewportRef = useRef<HTMLDivElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (scrollAreaViewportRef.current) {
-        scrollAreaViewportRef.current.scrollTop = scrollAreaViewportRef.current.scrollHeight;
+    if (scrollAreaRef.current) {
+        scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
   }, [messages, isLoading]);
 
@@ -59,7 +59,10 @@ export default function ChatInterface() {
         title: "Error",
         description: "Failed to get response from the bot.",
       });
-       setMessages((prev) => prev.slice(0, -1));
+       const lastUserMessageIndex = messages.findLastIndex(m => m.role === 'user');
+       if (lastUserMessageIndex !== -1) {
+         setMessages(prev => prev.slice(0, lastUserMessageMessageIndex));
+       }
     } finally {
       setIsLoading(false);
     }
@@ -72,12 +75,12 @@ export default function ChatInterface() {
           <div className="p-2 rounded-full bg-primary/10 text-primary">
             <Bot className="w-6 h-6" />
           </div>
-          Gemini Chat
+          OpenRouter Chat
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        <ScrollArea className="h-[500px] w-full">
-            <div className="p-6 flex flex-col gap-6" ref={scrollAreaViewportRef}>
+        <ScrollArea className="h-[500px] w-full" ref={scrollAreaRef}>
+            <div className="p-6 flex flex-col gap-6">
                 {messages.map((message) => (
                 <div
                     key={message.id}
