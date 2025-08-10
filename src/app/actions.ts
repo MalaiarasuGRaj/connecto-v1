@@ -93,14 +93,14 @@ export async function getResponse(input: { message: string, history: any[] }) {
     }
 
     // Step 1: Try to find a relevant filename.
-    const fileSelectionPrompt = `You are an expert at routing user questions to the correct document. Based on the user's question, identify the most relevant filename from the following list.
+    const fileSelectionPrompt = `You are an expert at routing user questions to the correct document based on the user's message and the conversation history. Based on the user's question and the history, identify the most relevant filename from the following list.
 
 Available files:
 ${filenames.join('\n')}
 
 Only return the single, most relevant filename and nothing else. If no file is relevant for the user's question (e.g. for "hi", "how are you", or "what companies do you have?"), respond with "NONE".`;
 
-    let relevantFilename = await callOpenRouter(fileSelectionPrompt, userMessage, []); // Pass empty history for routing
+    let relevantFilename = await callOpenRouter(fileSelectionPrompt, userMessage, history);
     relevantFilename = relevantFilename.trim().replace(/`/g, '');
 
 
