@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useRef, useEffect, type FormEvent } from "react";
@@ -60,7 +59,7 @@ export default function ChatInterface() {
     try {
       const botResponse = await getResponse({
         message: currentInput,
-        history: messages, // Pass previous messages as history
+        history: messages,
       });
       const botMessage: Message = {
         id: crypto.randomUUID(),
@@ -84,13 +83,13 @@ export default function ChatInterface() {
   };
 
   return (
-    <Card className="w-full max-w-2xl h-full flex flex-col mx-auto shadow-xl rounded-2xl bg-card/80 backdrop-blur-sm border-white/10">
-      <CardHeader className="border-b border-white/10">
+    <Card className="w-full max-w-2xl h-full flex flex-col mx-auto md:shadow-xl md:rounded-2xl md:bg-card/80 md:backdrop-blur-sm md:border-white/10 border-0 rounded-none">
+      <CardHeader className="border-b md:border-white/10">
         <CardTitle className="flex items-center gap-3 text-xl font-headline">
           <Image src="/logo.png" alt="Connecto Logo" width={32} height={32} className="rounded-md" />
           Connecto
         </CardTitle>
-        <Separator />
+        <Separator className="hidden md:block"/>
       </CardHeader>
       <CardContent className="p-0 flex-1 overflow-hidden">
         <ScrollArea className="h-full w-full" viewportRef={viewportRef}>
@@ -140,7 +139,7 @@ export default function ChatInterface() {
             </div>
         </ScrollArea>
       </CardContent>
-      <CardFooter className="p-4 border-t border-white/10">
+      <CardFooter className="p-4 border-t md:border-white/10">
         <form onSubmit={handleSubmit} className="flex w-full items-center gap-3">
           <Textarea
             value={input}
