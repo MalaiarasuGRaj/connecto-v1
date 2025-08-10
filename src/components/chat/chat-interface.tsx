@@ -82,7 +82,7 @@ export default function ChatInterface() {
     <Card className="w-full max-w-2xl mx-auto shadow-xl rounded-2xl bg-card/80 backdrop-blur-sm border-white/10">
       <CardHeader className="border-b border-white/10">
         <CardTitle className="flex items-center gap-3 text-xl font-headline">
-          <Image src="/logo.png" alt="Connecto Logo" width={32} height={32} />
+          <Image src="/logo.png" alt="Connecto Logo" width={32} height={32} className="rounded-md" />
           Connecto
         </CardTitle>
         <Separator />
