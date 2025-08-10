@@ -7,7 +7,7 @@ export default function Home() {
       <main className="flex-grow flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
         <ChatInterface />
       </main>
-      <footer className="w-full p-4 text-center text-gray-600 text-sm">
+      <footer className="w-full p-4 text-center text-gray-700 text-sm">
         <div className="flex items-center justify-center gap-2">
            <span>© 2025 CONNECT Training Solutions (P) Ltd.</span>
             <a 
