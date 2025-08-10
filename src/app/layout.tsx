@@ -4,7 +4,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'OpenRouter Chat',
+  title: 'Connecto',
   description: 'A simple chatbot web application using the OpenRouter API.',
 };
 

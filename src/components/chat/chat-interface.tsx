@@ -23,7 +23,7 @@ interface Message {
 const initialMessage: Message = {
     id: "initial-message",
     role: "bot",
-    content: "Hi! I'm your career assistant, here to help you with information about company hiring processes, salaries, and roles based on the provided documents. How can I help you with your placement preparation today?",
+    content: "Hi! I'm Connecto, your career assistant, here to help you with information about company hiring processes, salaries, and roles based on previous years' hiring data. How can I assist you with your placement preparation today?",
 };
 
 
@@ -84,7 +84,7 @@ export default function ChatInterface() {
           <div className="p-2 rounded-full bg-primary/10 text-primary">
             <Bot className="w-6 h-6" />
           </div>
-          OpenRouter Chat
+          Connecto
         </CardTitle>
         <Separator />
       </CardHeader>
