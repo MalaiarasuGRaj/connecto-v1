@@ -1,9 +1,26 @@
 import ChatInterface from '@/components/chat/chat-interface';
+import { Linkedin } from 'lucide-react';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r from-violet-200 to-pink-200 p-4 sm:p-6 md:p-8">
-      <ChatInterface />
-    </main>
+    <div className="flex min-h-screen flex-col bg-gradient-to-r from-violet-200 to-pink-200">
+      <main className="flex-grow flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
+        <ChatInterface />
+      </main>
+      <footer className="w-full p-4 text-center text-gray-600 text-sm">
+        <div className="flex items-center justify-center gap-2">
+           <span>© 2025 CONNECT Training Solutions (P) Ltd.</span>
+            <a 
+              href="https://www.linkedin.com/company/connect-training-solutions-private-limited/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="hover:text-primary transition-colors"
+            >
+              <Linkedin size={18} />
+            </a>
+        </div>
+      </footer>
+    </div>
   );
 }
