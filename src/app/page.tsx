@@ -15,9 +15,9 @@ export default function Home() {
               target="_blank" 
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="hover:text-primary transition-colors"
+              className="p-1 bg-white/50 rounded-md hover:bg-white/80 transition-colors"
             >
-              <Linkedin size={18} />
+              <Linkedin size={18} className="text-gray-800" />
             </a>
         </div>
       </footer>
