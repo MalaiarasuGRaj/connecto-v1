@@ -1,0 +1,48 @@
+Wipro Hiring Process – Graduate Engineer Trainee (GET)
+
+1. Application
+- Apply through Wipro's official careers portal (Wipro NLTH/Elite) or during on-campus/off-campus recruitment drives.
+- Ensure your resume is updated, highlighting technical skills, projects, and any internships.
+
+2. Online Assessment
+- Platform: Typically conducted on platforms like AMCAT or CoCubes.
+- Sections:
+  - Aptitude Test: Logical Reasoning, Quantitative Ability, English/Verbal Ability. (Approx. 48 mins)
+  - Written Communication Test: Essay writing on a given topic. (Approx. 20 mins)
+  - Online Programming Test: Two coding questions, usually focused on fundamentals. (Approx. 60 mins)
+- Languages allowed for coding are typically Java, C, C++, or Python.
+
+3. Technical Interview
+- A face-to-face or virtual interview with a technical panel.
+- Focuses on core subjects of your engineering discipline (e.g., OOPs, Data Structures, DBMS, OS for CS/IT students).
+- Discussion on projects mentioned in your resume.
+- May include one or two coding problems to be solved on the spot.
+
+4. HR Interview
+- Evaluates your personality, communication skills, and alignment with Wipro's values.
+- Common questions about your background, strengths, weaknesses, career aspirations, and willingness to relocate or work in different domains.
+
+5. Offer and Onboarding
+- Selected candidates receive an offer letter.
+- Onboarding includes training (PRP - Project Readiness Program), orientation, and assignment to business units.
+
+Eligibility Criteria (GET Role):
+- Education: B.E./B.Tech or 5-year Integrated M.Tech.
+- Eligible Streams: CS/IT/Circuital branches (ECE, EEE, etc.).
+- Marks: Minimum 60% or 6.0 CGPA in 10th, 12th, and Graduation.
+- Backlogs: No active backlogs at the time of the selection process.
+- Gap Year: A maximum of a 1-year academic gap is generally allowed.
+
+Roles Hired For:
+- Graduate Engineer Trainee (GET)
+- Project Engineer
+
+Salary Package (Fresher, GET Role):
+- Typically around ₹3.5–₹4.0 Lakhs per annum (LPA).
+- May include a bonus or additional benefits based on performance after one year.
+
+Tips for Preparation:
+- Practice aptitude questions from platforms like IndiaBIX or GeeksforGeeks.
+- Be thorough with the fundamentals of at least one programming language (preferably the one you chose for the test).
+- Prepare to explain your final year project in detail.
+- Work on your communication skills and be confident during the HR round.
