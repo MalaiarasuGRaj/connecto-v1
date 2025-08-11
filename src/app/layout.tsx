@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: 'Connecto',
-  description: 'A simple chatbot web application using the OpenRouter API.',
+  description: 'CONNECT’s career chatbot – your friendly guide to ace placements with tips from past hiring trends.',
 };
 
 export default function RootLayout({
