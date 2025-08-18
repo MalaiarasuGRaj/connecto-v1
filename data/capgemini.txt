@@ -1,0 +1,48 @@
+Capgemini Hiring Process – B.E./B.Tech Freshers (2025)
+
+1. Application
+- Apply via Capgemini Careers portal, campus placement drives, or referral programs.
+- Resume should highlight programming skills, academic projects, and any relevant certifications.
+
+2. Online Assessment
+- Includes sections on Quantitative Aptitude, Logical Reasoning, Verbal Ability, and Essay Writing.
+- Coding Test:
+  - 2 programming questions (languages allowed: C, C++, Java, Python).
+  - Duration: ~60 minutes for technical rounds.
+- Some drives include a Game-Based Aptitude Test.
+
+3. Technical Interview
+- Covers basic and intermediate programming concepts, data structures, algorithms, DBMS, and OOPs.
+- May discuss academic projects, internships, and basic scenario-based problems.
+
+4. HR Interview
+- Focuses on communication, teamwork, flexibility, and cultural fit.
+- Questions about goals, strengths/weaknesses, work preferences.
+
+5. Offer and Onboarding
+- Selected candidates receive offer letters for roles such as Analyst or Software Engineer via email.
+- Onboarding includes orientation, systems access, and assignment to training and project groups.
+
+Eligibility Criteria (2025)
+- Education: B.E./B.Tech (all branches eligible).
+- Minimum 60% marks or 6.0 CGPA in 10th, 12th, and graduation.
+- No active backlogs at the time of selection.
+- Maximum academic gap allowed: 1 year between any two qualifications.
+- Final-year students (2025 batch) are eligible for fresher roles.
+
+Roles Hired For
+- Analyst
+- Software Engineer
+- Graduate Trainee
+- IT Support Engineer
+
+Salary Package (2025)
+- Analyst/Software Engineer: ₹3.6–₹4.0LPA (Lakhs Per Annum).
+- Higher packages (~₹6LPA and above) offered for specialized Digital or advanced technical roles.
+
+Tips for Preparation
+- Practice Capgemini-specific aptitude and coding tests.
+- Revise programming fundamentals, project explanations, and key CS/IT concepts.
+- Prepare for essay writing and game-based aptitude rounds.
+- Work on communication and interpersonal skills for interviews.
+- Stay updated about Capgemini services, clients, and recent achievements.
