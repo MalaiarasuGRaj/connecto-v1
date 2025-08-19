@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
       '*.cluster-ikxjzjhlifcwuroomfkjrx437g.cloudworkstations.dev',
     ],
   },
+  serverFiles: ['data/**'],
 };
 
 export default nextConfig;
