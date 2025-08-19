@@ -1,3 +1,4 @@
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
@@ -22,6 +23,11 @@ const nextConfig: NextConfig = {
     allowedDevOrigins: [
       '*.cluster-ikxjzjhlifcwuroomfkjrx437g.cloudworkstations.dev',
     ],
+  },
+  experimental: {
+    outputFileTracingIncludes: {
+      '/*': ['./data/**/*'],
+    },
   },
 };
 
