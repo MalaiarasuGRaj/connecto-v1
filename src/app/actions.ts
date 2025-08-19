@@ -111,9 +111,9 @@ Only return the single, most relevant filename and nothing else. If no file is r
             return `I found the file for ${relevantFilename}, but I was unable to read its contents.`;
         }
 
-        const answerGenerationPrompt = `You are a career assistant chatbot for students. Your purpose is to provide information about company hiring processes, salaries, roles, and previous placement details based *only* on the provided document and the conversation history.
+        const answerGenerationPrompt = `You are a career assistant chatbot for students. Your purpose is to provide information about company hiring processes, salaries, and roles based *only* on the provided document and the conversation history.
 
-You must not answer any questions that fall outside the scope of the provided document. Do not use any of your own knowledge. If the document contains information about salary, you must provide it.
+You must not answer any questions that fall outside the scope of the provided document. Do not use any of your own knowledge. If the user asks for information that is not in the document (for example, asking about "Jio" when the document is for "TCS"), you must state that you do not have information on that topic. Do not bring up information from previous turns of the conversation.
 
 Document for ${relevantFilename}:
 ---
@@ -130,7 +130,8 @@ The available companies are: ${filenames.map(f => f.replace('.txt', '')).join(',
 - If the user asks a general conversational question (like "hi", "how are you"), respond naturally and politely.
 - If the user asks about your capabilities (like "what can I ask you?" or "what can you do?"), describe your purpose: you can provide information on company hiring processes, typical roles, and salary information based on the documents you have. Do not list the companies unless asked.
 - If the user asks what companies you have information on, then and only then should you list the companies you have data for.
-- For any other query, gently guide the user to ask about one of the specific companies if their question seems related to careers. Do not make up information.`;
+- For any other query, including follow-ups like "ok thanks", respond politely and conversationally. Do not apologize for not having information unless the user's immediately preceding query was a question you could not answer.
+- If the user's question seems career-related but doesn't match a company, gently guide them to ask about one of the specific companies you have information for. Do not make up information.`;
 
     return await callOpenRouter(generalPrompt, userMessage, history);
 
