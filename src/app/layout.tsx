@@ -4,7 +4,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Connecto',
+  title: 'Connecto (Beta)',
   description: 'CONNECT’s career chatbot – your friendly guide to ace placements with tips from past hiring trends.',
 };
 

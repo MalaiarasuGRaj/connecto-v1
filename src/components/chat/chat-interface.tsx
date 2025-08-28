@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef, useEffect, type FormEvent } from "react";
@@ -87,7 +88,7 @@ export default function ChatInterface() {
       <CardHeader className="border-b md:border-white/10 shrink-0">
         <CardTitle className="flex items-center gap-3 text-xl font-headline">
           <Image src="/logo.png" alt="Connecto Logo" width={32} height={32} className="rounded-md" />
-          Connecto
+          Connecto (Beta)
         </CardTitle>
         <Separator className="hidden md:block"/>
       </CardHeader>
