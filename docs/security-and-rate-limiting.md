@@ -42,3 +42,7 @@ AI keys are server-only:
 - GEMINI_API_KEY
 
 Do not use NEXT_PUBLIC_GEMINI_API_KEY. See `.env.example` for guidance.
+
+## Authentication (Feature-Flagged)
+
+Optional NextAuth integration is scaffolded and disabled by default to keep all endpoints public. When you need to protect admin/write endpoints, enable auth and wrap those endpoints with `requireAuth` from `src/lib/auth.ts`. See `docs/auth.md` for configuration.

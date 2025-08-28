@@ -134,3 +134,13 @@ graph TD
 
 ### Deployment
 The application is configured for seamless deployment to [Vercel](https://vercel.com/). Simply connect your GitHub repository to a new Vercel project, and it will deploy automatically on every push to the main branch.
+
+---
+
+## 5. Authentication (Feature-Flagged)
+
+This project includes a scaffolded NextAuth setup that is disabled by default to avoid changing current public behavior. All existing endpoints remain public unless you explicitly add protection.
+
+- Docs: `docs/auth.md`
+- To enable: set `ENABLE_AUTH=true` and configure provider secrets in `.env` (see `.env.example`).
+- Only wrap future admin/write routes with `requireAuth` from `src/lib/auth.ts`. Public endpoints should remain unwrapped unless you intentionally want to protect them.

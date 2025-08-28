@@ -78,8 +78,8 @@ export function middleware(req: NextRequest) {
     return applySecurityHeaders(preflight, req);
   }
 
-  // Rate limit only API routes
-  if (shouldRateLimit(pathname)) {
+  // Rate limit only API routes (skip NextAuth routes)
+  if (shouldRateLimit(pathname) && !pathname.startsWith("/api/auth")) {
     const ip = getClientIp(req.headers);
     // bucket per path to avoid cross-route coupling
     const key = `${ip}:${pathname}`;
