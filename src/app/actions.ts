@@ -92,13 +92,18 @@ export async function getResponse(input: { message: string, history: any[] }) {
         return "I'm sorry, but I don't have any company information available right now.";
     }
 
-    // Step 1: Try to find a relevant filename. Use history for context.
-    const fileSelectionPrompt = `You are an expert at routing user questions to the correct document based on the user's message and the conversation history. Based on the user's question and the history, identify the most relevant filename from the following list.
+    // Step 1: Try to find a relevant filename.
+    const fileSelectionPrompt = `You are an expert at routing user questions to the correct document. Your primary goal is to identify a company name in the user's most recent message. Use the conversation history for context only if the latest message is ambiguous (e.g., 'what about the salary?'). If the new message mentions a specific company, that takes precedence.
 
 Available files:
 ${filenames.join('\n')}
 
-Only return the single, most relevant filename and nothing else. If no file is relevant for the user's question (e.g. for "hi", "how are you", or "what companies do you have?"), respond with "NONE".`;
+Based on the user's question, identify the most relevant filename from the list.
+- If the user's message contains a company name that matches a file, return that filename.
+- If the user asks a follow-up question without a company name, use the history to find the relevant filename.
+- If no file is relevant (e.g., for "hi", "how are you?"), respond with "NONE".
+
+Return only the single, most relevant filename and nothing else.`;
 
     let relevantFilename = await callOpenRouter(fileSelectionPrompt, userMessage, history);
     relevantFilename = relevantFilename.trim().replace(/`/g, '');
@@ -111,19 +116,19 @@ Only return the single, most relevant filename and nothing else. If no file is r
             return `I found the file for ${relevantFilename}, but I was unable to read its contents.`;
         }
 
-        const answerGenerationPrompt = `You are a helpful AI assistant. Your primary goal is to answer the user's question based *only* on the provided context document.
+        const answerGenerationPrompt = `You are a helpful AI assistant. Your primary goal is to answer the user's question based *only* on the provided context document and the user's current question.
 
 **Rules:**
-1.  **Answer from the Document Only:** Your answers must be based exclusively on the text in the provided document. Do not add any information that is not present in the document.
-2.  **Be Concise:** Give a direct and concise answer to the user's question. Do not add conversational filler.
-3.  **Handle Missing Information:** If the user asks for information that is not in the document (e.g., asking about "benefits" when the document only contains salary and hiring process), you must state that the document does not contain that specific information. Do not make up an answer. For example, say "The provided document for ${relevantFilename} does not contain information about benefits."
+1.  **Answer from the Document Only:** Base your answers exclusively on the text in the provided document. Do not add information that isn't there.
+2.  **Be Concise and Direct:** Give a direct answer to the user's most recent question. Do not add conversational filler.
+3.  **No Repetition:** Do not repeat information the user already knows from the conversation. If the user asks a follow-up question (e.g., 'salary?'), provide *only the new information* (the salary). Do not repeat the hiring process you just described.
+4.  **Handle Missing Information:** If the user asks for information not in the document, you must state that the document does not contain that specific information. For example, say "The provided document for ${relevantFilename} does not contain information about benefits." Do not make up an answer.
 
 **Document for ${relevantFilename}:**
 ---
 ${companyKnowledge}
 ---
 `;
-        // VERY IMPORTANT: We pass an EMPTY history here to prevent the AI from repeating itself.
         return await callOpenRouter(answerGenerationPrompt, userMessage, []);
     }
 
