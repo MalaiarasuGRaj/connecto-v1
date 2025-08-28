@@ -1,4 +1,3 @@
-// This file uses server-side code, and must have the 'use server' directive.
 'use server';
 
 /**
@@ -11,6 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { withFlowLogging, logger } from '@/lib/logger';
 
 const GenerateGeminiResponseInputSchema = z.object({
   message: z.string().describe('The user message to be processed by the chatbot.'),
@@ -22,6 +22,7 @@ const GenerateGeminiResponseOutputSchema = z.object({
 });
 export type GenerateGeminiResponseOutput = z.infer<typeof GenerateGeminiResponseOutputSchema>;
 
+// PUBLIC_INTERFACE
 export async function generateGeminiResponse(input: GenerateGeminiResponseInput): Promise<GenerateGeminiResponseOutput> {
   return generateGeminiResponseFlow(input);
 }
@@ -39,8 +40,8 @@ const generateGeminiResponseFlow = ai.defineFlow(
     inputSchema: GenerateGeminiResponseInputSchema,
     outputSchema: GenerateGeminiResponseOutputSchema,
   },
-  async input => {
+  withFlowLogging('generateGeminiResponseFlow', async (input) => {
     const {output} = await generateGeminiResponsePrompt(input);
     return output!;
-  }
+  })
 );

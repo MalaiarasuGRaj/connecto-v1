@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import { config } from "@/lib/config";
+import { withApiLogging } from "@/lib/logger";
 
 /**
  * PUBLIC_INTERFACE
@@ -21,31 +21,29 @@ import { config } from "@/lib/config";
  *  - id: string
  *  - content: { lines: string[] }
  */
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { company: string } }
-) {
+export const GET = withApiLogging(async (req: NextRequest, log) => {
+  const company = (req as any).params?.company ?? (req as any)?.company; // fallback
+  const format = (req.nextUrl.searchParams.get("format") || "text").toLowerCase();
+
+  if (!company || typeof company !== "string") {
+    return NextResponse.json(
+      { ok: false, error: { code: "invalid_param", message: "`company` is required" } },
+      { status: 400 }
+    );
+  }
+
+  const safeName = company.replace(/[^a-z0-9_-]/gi, "");
+  const filePath = path.join(process.cwd(), "data", `${safeName}.txt`);
+
+  if (!fs.existsSync(filePath)) {
+    log.warn({ safeName }, "knowledge item not found");
+    return NextResponse.json(
+      { ok: false, error: { code: "not_found", message: `Knowledge item '${safeName}' not found` } },
+      { status: 404 }
+    );
+  }
+
   try {
-    const company = params?.company;
-    const format = (req.nextUrl.searchParams.get("format") || "text").toLowerCase();
-
-    if (!company || typeof company !== "string") {
-      return NextResponse.json(
-        { ok: false, error: { code: "invalid_param", message: "`company` is required" } },
-        { status: 400 }
-      );
-    }
-
-    const safeName = company.replace(/[^a-z0-9_-]/gi, "");
-    const filePath = path.join(process.cwd(), "data", `${safeName}.txt`);
-
-    if (!fs.existsSync(filePath)) {
-      return NextResponse.json(
-        { ok: false, error: { code: "not_found", message: `Knowledge item '${safeName}' not found` } },
-        { status: 404 }
-      );
-    }
-
     const content = fs.readFileSync(filePath, "utf8");
 
     if (format === "json") {
@@ -68,9 +66,10 @@ export async function GET(
       { status: 200 }
     );
   } catch (err: any) {
+    log.error({ err, safeName }, "failed reading knowledge item");
     return NextResponse.json(
-      { ok: false, error: { code: "fs_error", message: err?.message || "Failed to read knowledge item" } },
+      { ok: false, error: { code: "fs_error", message: "Failed to read knowledge item" } },
       { status: 500 }
     );
   }
-}
+});

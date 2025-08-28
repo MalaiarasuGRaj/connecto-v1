@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { withApiLogging } from "@/lib/logger";
 
 /**
  * PUBLIC_INTERFACE
@@ -11,8 +12,7 @@ import { NextResponse } from "next/server";
  *  - timestamp: string (ISO)
  *  - version?: string
  */
-export async function GET() {
-  // Avoid using process.env values directly in response to prevent leaks
+export const GET = withApiLogging(async (_req: NextRequest, _log) => {
   const startedAt = (global as any).__app_started_at || Date.now();
   (global as any).__app_started_at = startedAt;
 
@@ -27,4 +27,4 @@ export async function GET() {
     },
     { status: 200 }
   );
-}
+});

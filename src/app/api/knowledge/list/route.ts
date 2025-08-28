@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import { config } from "@/lib/config";
+import { withApiLogging } from "@/lib/logger";
 
 /**
  * PUBLIC_INTERFACE
@@ -12,7 +12,7 @@ import { config } from "@/lib/config";
  *  - ok: boolean
  *  - items: Array<{ id: string; file: string }>
  */
-export async function GET() {
+export const GET = withApiLogging(async (_req: NextRequest, log) => {
   try {
     const dataDir = path.join(process.cwd(), "data");
     const files = fs.existsSync(dataDir) ? fs.readdirSync(dataDir) : [];
@@ -23,11 +23,13 @@ export async function GET() {
         return { id, file };
       });
 
+    log.debug({ count: items.length }, "knowledge list");
     return NextResponse.json({ ok: true, items }, { status: 200 });
   } catch (err: any) {
+    log.error({ err }, "failed to read knowledge list");
     return NextResponse.json(
-      { ok: false, items: [], error: { code: "fs_error", message: err?.message || "Failed to read knowledge list" } },
+      { ok: false, items: [], error: { code: "fs_error", message: "Failed to read knowledge list" } },
       { status: 500 }
     );
   }
-}
+});
