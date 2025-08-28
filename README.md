@@ -113,11 +113,19 @@ graph TD
     ```bash
     npm install
     ```
-4.  **Set up Environment Variables:**
-    Create a file named `.env.local` in the root of the project and add your API keys:
+4.  **Set up Environment Variables (Server-only):**
+    Create a file named `.env.local` in the root of the project and add your API keys. Do not use any NEXT_PUBLIC_* variables for AI keys.
+    At least one of the following is required:
     ```
-    OPENROUTER_API_KEY=your_api_key_here
+    # Option A: Use OpenRouter (recommended for proxying Gemini)
+    OPENROUTER_API_KEY=your_openrouter_key
+
+    # Option B: Use Google Gemini directly with Genkit
+    GEMINI_API_KEY=your_gemini_key
     ```
+    Notes:
+    - These variables are SERVER-ONLY. Do not expose in client code. There is no NEXT_PUBLIC_GEMINI_API_KEY.
+    - Vercel: set these in Project Settings -> Environment Variables.
 5.  **Run the development server:**
     ```bash
     npm run dev

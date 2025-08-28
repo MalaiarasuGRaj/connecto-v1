@@ -4,7 +4,7 @@
 import { useState, useRef, useEffect, type FormEvent } from "react";
 import Image from "next/image";
 import { Send, Bot, User, Loader2 } from "lucide-react";
-import { getResponse } from "@/app/actions";
+import { getResponse } from "@/app/actions"; // Uses server-only APIs; no client env keys required
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";

@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateChatResponse } from "@/app/actions";
 
 /**
+ * Validate server env for each cold start of the function.
+ */
+function validateServerEnv() {
+  if (!process.env.OPENROUTER_API_KEY && !process.env.GEMINI_API_KEY) {
+    throw new Error("Server misconfigured: missing OPENROUTER_API_KEY or GEMINI_API_KEY");
+  }
+}
+validateServerEnv();
+
+/**
  * PUBLIC_INTERFACE
  * POST /api/chat
  * Summary: Chat endpoint that wraps existing server action to generate AI responses.
