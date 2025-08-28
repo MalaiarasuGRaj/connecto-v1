@@ -5,18 +5,8 @@ import { z } from 'zod';
 import fs from 'fs';
 import path from 'path';
 
-/**
- * Ensure server-only API keys are present at runtime.
- * We do not accept NEXT_PUBLIC_* keys for security reasons.
- */
-function assertServerEnv() {
-  if (!process.env.OPENROUTER_API_KEY && !process.env.GEMINI_API_KEY) {
-    throw new Error(
-      'Server configuration error: missing AI API key. Set OPENROUTER_API_KEY or GEMINI_API_KEY in the server environment.'
-    );
-  }
-}
-assertServerEnv();
+import { config } from '@/lib/config';
+config.ai.ensureAnyProvider();
 
 const MessageSchema = z.object({
   role: z.enum(['user', 'bot', 'system']),
@@ -63,10 +53,11 @@ async function callOpenRouter(systemPrompt: string, userMessage: string, history
       content: h.content,
     }));
 
+    const OPENROUTER_API_KEY = config.ai.openrouterApiKey();
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "Authorization": `Bearer ${OPENROUTER_API_KEY ?? ""}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

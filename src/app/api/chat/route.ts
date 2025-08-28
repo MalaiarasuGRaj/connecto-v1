@@ -1,15 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateChatResponse } from "@/app/actions";
 
-/**
- * Validate server env for each cold start of the function.
- */
-function validateServerEnv() {
-  if (!process.env.OPENROUTER_API_KEY && !process.env.GEMINI_API_KEY) {
-    throw new Error("Server misconfigured: missing OPENROUTER_API_KEY or GEMINI_API_KEY");
-  }
-}
-validateServerEnv();
+import { config } from "@/lib/config";
+config.ai.ensureAnyProvider();
 
 /**
  * PUBLIC_INTERFACE

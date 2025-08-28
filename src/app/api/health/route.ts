@@ -23,7 +23,7 @@ export async function GET() {
       status: "ok",
       uptime,
       timestamp: new Date().toISOString(),
-      version: process.env.NEXT_PUBLIC_APP_VERSION || undefined,
+      version: undefined,
     },
     { status: 200 }
   );
