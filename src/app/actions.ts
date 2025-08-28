@@ -151,3 +151,23 @@ The available companies are: ${filenames.map(f => f.replace('.txt', '')).join(',
     return 'Sorry, I encountered an error. Please try again.';
   }
 }
+
+/**
+ * PUBLIC_INTERFACE
+ * generateChatResponse
+ * Summary: Wrapper that preserves the existing server action contract for API usage.
+ * Description: Accepts message and optional history and delegates to getResponse. This keeps AI calls server-side.
+ */
+export async function generateChatResponse(input: {
+  message: string;
+  history?: Array<{ role: "user" | "assistant" | "system" | "bot"; content: string }>;
+  company?: string;
+}) {
+  // Normalize roles for compatibility with existing code which expects 'bot'/'user'
+  const history = (input.history ?? []).map(h => ({
+    role: h.role === 'assistant' ? 'bot' : (h.role as any),
+    content: h.content,
+  }));
+
+  return getResponse({ message: input.message, history });
+}
