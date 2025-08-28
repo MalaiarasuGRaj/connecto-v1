@@ -92,7 +92,7 @@ export async function getResponse(input: { message: string, history: any[] }) {
         return "I'm sorry, but I don't have any company information available right now.";
     }
 
-    // Step 1: Try to find a relevant filename.
+    // Step 1: Try to find a relevant filename. Use history for context.
     const fileSelectionPrompt = `You are an expert at routing user questions to the correct document based on the user's message and the conversation history. Based on the user's question and the history, identify the most relevant filename from the following list.
 
 Available files:
@@ -111,23 +111,23 @@ Only return the single, most relevant filename and nothing else. If no file is r
             return `I found the file for ${relevantFilename}, but I was unable to read its contents.`;
         }
 
-        const answerGenerationPrompt = `You are a helpful AI assistant. Your primary goal is to answer user questions based *only* on the provided context document and the conversation history.
+        const answerGenerationPrompt = `You are a helpful AI assistant. Your primary goal is to answer the user's question based *only* on the provided context document.
 
 **Rules:**
-1.  **Analyze the History:** First, review the conversation history. If the user's new message is a direct follow-up question (e.g., asking for "salary" right after you described the "hiring process"), you MUST NOT repeat the information you already provided. Your task is to extract *only the new piece of information* requested from the document.
-2.  **Be Extremely Concise for Follow-ups:** For a follow-up question, your answer should be the specific data point requested. For example, if the previous turn was about the TCS hiring process and the user now asks "what is the salary", the correct response is just the salary information (e.g., "₹3.5–₹4.0 Lakhs per annum (LPA)."), not the entire hiring process again.
-3.  **Answer from the Document Only:** Your answers must be based exclusively on the text in the provided document. Do not add any information that is not present in the document.
-4.  **Handle Missing Information:** If the user asks for information that is not in the document (e.g., asking about "benefits" when the document only contains salary and hiring process), you must state that you do not have that specific information. Do not make up an answer.
+1.  **Answer from the Document Only:** Your answers must be based exclusively on the text in the provided document. Do not add any information that is not present in the document.
+2.  **Be Concise:** Give a direct and concise answer to the user's question. Do not add conversational filler.
+3.  **Handle Missing Information:** If the user asks for information that is not in the document (e.g., asking about "benefits" when the document only contains salary and hiring process), you must state that the document does not contain that specific information. Do not make up an answer. For example, say "The provided document for ${relevantFilename} does not contain information about benefits."
 
 **Document for ${relevantFilename}:**
 ---
 ${companyKnowledge}
 ---
 `;
-        return await callOpenRouter(answerGenerationPrompt, userMessage, history);
+        // VERY IMPORTANT: We pass an EMPTY history here to prevent the AI from repeating itself.
+        return await callOpenRouter(answerGenerationPrompt, userMessage, []);
     }
 
-    // Step 3: If no specific file is relevant, fall back to a general conversational prompt.
+    // Step 3: If no specific file is relevant, fall back to a general conversational prompt. Use history.
     const generalPrompt = `You are a helpful and friendly career assistant chatbot for students. Your knowledge is based on a set of documents about company hiring processes.
 The available companies are: ${filenames.map(f => f.replace('.txt', '')).join(', ')}.
 
