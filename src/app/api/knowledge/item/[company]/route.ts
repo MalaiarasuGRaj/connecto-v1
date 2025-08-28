@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { withApiLogging } from "@/lib/logger";
+import { KnowledgeItemParamsSchema, KnowledgeItemQuerySchema, parseSearchParams } from "@/lib/schemas";
 
 /**
  * PUBLIC_INTERFACE
@@ -22,17 +23,23 @@ import { withApiLogging } from "@/lib/logger";
  *  - content: { lines: string[] }
  */
 export const GET = withApiLogging(async (req: NextRequest, log) => {
-  const company = (req as any).params?.company ?? (req as any)?.company; // fallback
-  const format = (req.nextUrl.searchParams.get("format") || "text").toLowerCase();
-
-  if (!company || typeof company !== "string") {
+  const paramsCompany = (req as any).params?.company ?? (req as any)?.company; // fallback
+  const paramsParsed = KnowledgeItemParamsSchema.safeParse({ company: paramsCompany });
+  if (!paramsParsed.success) {
     return NextResponse.json(
-      { ok: false, error: { code: "invalid_param", message: "`company` is required" } },
+      { ok: false, error: { code: "invalid_param", message: paramsParsed.error.issues.map(i => i.message).join("; ") } },
+      { status: 400 }
+    );
+  }
+  const queryParsed = parseSearchParams(req.nextUrl.searchParams, KnowledgeItemQuerySchema);
+  if (!queryParsed.success) {
+    return NextResponse.json(
+      { ok: false, error: { code: "invalid_query", message: queryParsed.error } },
       { status: 400 }
     );
   }
 
-  const safeName = company.replace(/[^a-z0-9_-]/gi, "");
+  const safeName = paramsParsed.data.company.replace(/[^a-z0-9_-]/gi, "");
   const filePath = path.join(process.cwd(), "data", `${safeName}.txt`);
 
   if (!fs.existsSync(filePath)) {
@@ -46,7 +53,7 @@ export const GET = withApiLogging(async (req: NextRequest, log) => {
   try {
     const content = fs.readFileSync(filePath, "utf8");
 
-    if (format === "json") {
+    if (queryParsed.data.format === "json") {
       return NextResponse.json(
         {
           ok: true,
