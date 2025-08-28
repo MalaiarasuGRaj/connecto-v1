@@ -94,46 +94,81 @@ graph TD
 
 ---
 
-## 4. Setup and Deployment (For Developers)
+## 4. Setup and Deployment (For Developers and Production)
 
 ### Prerequisites
 - Node.js
 - npm or yarn
+- A Vercel account (for production deployment)
 
 ### Local Development
-1.  **Clone the repository:**
+1.  Clone and install:
     ```bash
     git clone <your-repo-url>
-    ```
-2.  **Navigate to the project directory:**
-    ```bash
     cd <project-directory>
-    ```
-3.  **Install dependencies:**
-    ```bash
     npm install
     ```
-4.  **Set up Environment Variables (Server-only):**
-    Create a file named `.env.local` in the root of the project and add your API keys. Do not use any NEXT_PUBLIC_* variables for AI keys.
-    At least one of the following is required:
+2.  Set up Environment Variables (Server-only). At least one AI provider key is required:
     ```
-    # Option A: Use OpenRouter (recommended for proxying Gemini)
+    # Option A: Use OpenRouter (recommended)
     OPENROUTER_API_KEY=your_openrouter_key
 
-    # Option B: Use Google Gemini directly with Genkit
+    # Option B: Use Google Gemini directly
     GEMINI_API_KEY=your_gemini_key
     ```
     Notes:
     - These variables are SERVER-ONLY. Do not expose in client code. There is no NEXT_PUBLIC_GEMINI_API_KEY.
-    - Vercel: set these in Project Settings -> Environment Variables.
-5.  **Run the development server:**
+    - In Vercel, set these via Project Settings → Environment Variables.
+3.  Run the development server:
     ```bash
     npm run dev
     ```
-    The application will be available at `http://localhost:3000`.
+    The application will be available at http://localhost:3000.
 
-### Deployment
-The application is configured for seamless deployment to [Vercel](https://vercel.com/). Simply connect your GitHub repository to a new Vercel project, and it will deploy automatically on every push to the main branch.
+### Production Deployment to Vercel
+
+1. Create a Vercel project and import this repository.
+2. Framework preset: Next.js. Default build command is fine.
+3. Set environment variables (Production, Preview):
+   - OPENROUTER_API_KEY or GEMINI_API_KEY (at least one required)
+   - Optional auth (feature-flag): ENABLE_AUTH, NEXTAUTH_URL, NEXTAUTH_SECRET, and OAuth provider secrets (GitHub/Google) if enabling.
+   - Optional: NEXT_PUBLIC_APP_VERSION
+4. Select a region close to your users. You can expand to multiple regions later.
+5. Deploy. Each push to main triggers a new deployment.
+
+Post-deploy checks:
+- GET /api/health returns 200 with status: "ok"
+- POST /api/chat with a sample payload returns an AI-generated reply
+- Excessive requests to an API path (>60/min/IP) eventually return 429 per in-memory limiter
+
+### Environment Variables Reference (Production)
+
+| Name | Required | Scope | Description |
+| --- | --- | --- | --- |
+| OPENROUTER_API_KEY | One of OPENROUTER_API_KEY or GEMINI_API_KEY required | Server | OpenRouter API key for Gemini proxy. |
+| GEMINI_API_KEY | One of OPENROUTER_API_KEY or GEMINI_API_KEY required | Server | Google Gemini API key. |
+| ENABLE_AUTH | Optional | Server | Enable NextAuth routes when set to "true". |
+| NEXTAUTH_SECRET | Required if ENABLE_AUTH=true | Server | Secret for NextAuth. |
+| NEXTAUTH_URL | Required if ENABLE_AUTH=true | Server | Public URL for NextAuth callbacks. |
+| GITHUB_ID / GITHUB_SECRET | Optional | Server | OAuth credentials if enabling GitHub auth. |
+| GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET | Optional | Server | OAuth credentials if enabling Google auth. |
+| NEXT_PUBLIC_APP_VERSION | Optional | Public | Version string for UI/telemetry. |
+
+### Security and Rate Limiting
+
+- Middleware enforces security headers (CSP, Referrer-Policy, X-Content-Type-Options, X-Frame-Options, COOP/CORP, Permissions-Policy) and CORS (same-origin by default).
+- Rate limiting defaults to 60 req/min per IP+path. Headers: RateLimit-Limit, RateLimit-Remaining, RateLimit-Reset.
+- For multi-region/global enforcement, migrate limiter storage to Redis. See docs/security-and-rate-limiting.md.
+
+### Health and API Endpoints
+
+- Health: GET /api/health → liveness/readiness JSON. Source: src/app/api/health/route.ts
+- Chat: POST /api/chat → JSON response with AI output. Source: src/app/api/chat/route.ts
+- Knowledge:
+  - GET /api/knowledge/list → list of available items
+  - GET /api/knowledge/item/[company]?format=text|json → content for a company
+
+For a complete production operations guide (runbooks, scaling, monitoring), see kavia-docs/production-deployment.md.
 
 ---
 
