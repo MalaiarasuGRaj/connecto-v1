@@ -19,16 +19,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  devIndicators: {
-    allowedDevOrigins: [
-      '*.cluster-ikxjzjhlifcwuroomfkjrx437g.cloudworkstations.dev',
-    ],
-  },
-  experimental: {
-    outputFileTracingIncludes: {
-      '/*': ['./data/**/*'],
-    },
-  },
+  // devIndicators: {
+  //   allowedDevOrigins: [
+  //     '*.cluster-ikxjzjhlifcwuroomfkjrx437g.cloudworkstations.dev',
+  //   ],
+  // },
+  // experimental: {
+  //   outputFileTracingIncludes: {
+  //     '/*': ['./data/**/*'],
+  //   },
+  // },
 };
 
 export default nextConfig;

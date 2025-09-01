@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Send, Bot, User, Loader2 } from "lucide-react";
 import { getResponse } from "@/app/actions";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/auth-context";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -34,6 +35,7 @@ export default function ChatInterface() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const viewportRef = useRef<HTMLDivElement>(null);
+  const { logout } = useAuth();
 
   useEffect(() => {
     if (viewportRef.current) {
@@ -68,7 +70,7 @@ export default function ChatInterface() {
         content: botResponse,
       };
       setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
+    } catch {
       toast({
         variant: "destructive",
         title: "Error",
@@ -86,11 +88,14 @@ export default function ChatInterface() {
   return (
     <Card className="w-full max-w-2xl h-full flex flex-col mx-auto md:shadow-xl md:rounded-2xl md:bg-card/80 md:backdrop-blur-sm md:border-white/10 border-0 rounded-none">
       <CardHeader className="border-b md:border-white/10 shrink-0">
-        <CardTitle className="flex items-center gap-3 text-xl font-headline">
-          <Image src="/logo.png" alt="Connecto Logo" width={32} height={32} className="rounded-md" />
-          Connecto (Beta)
-        </CardTitle>
-        <Separator className="hidden md:block"/>
+        <div className="flex justify-between items-center">
+          <CardTitle className="flex items-center gap-3 text-xl font-headline">
+            <Image src="/logo.png" alt="Connecto Logo" width={32} height={32} className="rounded-md" />
+            Connecto (Beta)
+          </CardTitle>
+          <Button variant="outline" size="sm" onClick={logout}>Logout</Button>
+        </div>
+        <Separator className="hidden md:block pt-2"/>
       </CardHeader>
       <CardContent className="p-0 flex-1 overflow-hidden">
         <ScrollArea className="h-full w-full" viewportRef={viewportRef}>

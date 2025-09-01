@@ -77,7 +77,12 @@ async function callOpenRouter(systemPrompt: string, userMessage: string, history
 }
 
 
-export async function getResponse(input: { message: string, history: any[] }) {
+interface Message {
+  role: "user" | "bot" | "system";
+  content: string;
+}
+
+export async function getResponse(input: { message: string, history: Message[] }) {
   const validatedInput = RequestSchema.safeParse(input);
   if (!validatedInput.success) {
     throw new Error('Invalid input');
